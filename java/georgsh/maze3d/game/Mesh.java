@@ -4,15 +4,10 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
-import java.util.Vector;
 
 import javax.microedition.khronos.opengles.GL10;
-import javax.microedition.khronos.opengles.GL11;
-import javax.microedition.khronos.opengles.GL11Ext;
 
 import android.graphics.Bitmap;
-import android.opengl.GLES11;
-import android.opengl.GLU;
 import android.opengl.GLUtils;
 import android.util.Log;
 
@@ -20,33 +15,14 @@ public class Mesh
     {
     FloatBuffer mVerticesBuffer = null;
     ShortBuffer mIndicesBuffer = null;
-    FloatBuffer mTextureBuffer = null; // New variable.
-    int mTextureId = -1; // New variable.
-    Bitmap mBitmap; // New variable.
-    boolean mShouldLoadTexture = false; // New variable.
+    FloatBuffer mTextureBuffer = null;
+    int mTextureId = -1;
+    Bitmap mBitmap;
+    boolean mShouldLoadTexture = false;
     int mNumOfIndices = -1;
     private final float[] mRGBA = new float[]{1.0f, 1.0f, 1.0f, 1.0f};
     private FloatBuffer mColorBuffer = null;
-    public float x = 0;
-    public float y = 0;
-    public float z = 0;
-    public float rx = 0;
-    public float ry = 0;
-    public float rz = 0;
 
-    public void SetPos(float x, float y, float z)
-        {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        }
-
-    public void SetRotate(float rx, float ry, float rz)
-        {
-        this.rx = rx;
-        this.ry = ry;
-        this.rz = rz;
-        }
     public void beginDraw(GL10 gl)
         {
         gl.glFrontFace(GL10.GL_CCW);
@@ -106,16 +82,8 @@ public class Mesh
 
     public void drawBody(GL10 gl)
         {
-        gl.glPushMatrix();
-        gl.glTranslatef(x, y, z);
-
-        gl.glRotatef(rx, 1, 0, 0);
-        gl.glRotatef(ry, 0, 1, 0);
-        gl.glRotatef(rz, 0, 0, 1);
-
         gl.glDrawElements(GL10.GL_TRIANGLES, mNumOfIndices,
                 GL10.GL_UNSIGNED_SHORT, mIndicesBuffer);
-        gl.glPopMatrix();
         }
     public void draw(GL10 gl)
         {
@@ -164,24 +132,15 @@ public class Mesh
         mRGBA[3] = alpha;
         }
 
-    protected void setColors(float[] colors)
-        {
-        ByteBuffer cbb = ByteBuffer.allocateDirect(colors.length * 4);
-        cbb.order(ByteOrder.nativeOrder());
-        mColorBuffer = cbb.asFloatBuffer();
-        mColorBuffer.put(colors);
-        mColorBuffer.position(0);
-        }
-
     public void loadBitmap(Bitmap bitmap)
-        { // New function.
+        {
         if(bitmap == null) { Log.w("maze3d", "Null bitmap"); }
         this.mBitmap = bitmap;
         mShouldLoadTexture = true;
         }
 
     public void loadGLTexture(GL10 gl)
-        { // New function
+        {
         if (!mShouldLoadTexture) { return; }
         int[] textures = new int[1];
         gl.glGenTextures(1, textures, 0);

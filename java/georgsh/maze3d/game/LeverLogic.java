@@ -78,8 +78,6 @@ public class LeverLogic
         {
         if(!isVisible()) { return; }
         subsystem.Switch();
-        //if(state) { game.SetBlocks(wallx, wally); }
-        //else      { game.DeleteBlocks(wallx, wally); }
         }
     void SwitchOnlyThis()
         {

@@ -31,7 +31,6 @@ public class MazeObj extends Mesh
         for(int i = 0; i < 8; i++) { floorcrds[i] = wallcrds[i]; if(i%2 == 0) {floorcrds[i]+=0.5f;} } // x-shift
         for(int i = 0; i < 8; i++) { ceilcrds[i]  = wallcrds[i]; if(i%2 == 1) {ceilcrds[i] +=0.5f;} } // y-shift
         for(int i = 0; i < 8; i++) { fincrds[i]  = wallcrds[i];  fincrds[i] +=0.5f; } // x-y-shift
-        //float[] wallcrds = new float[] {0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f};
 
         Vector<Integer> ind = new Vector<Integer>();
         int counter = 0;
@@ -91,16 +90,8 @@ public class MazeObj extends Mesh
 
                 if (cur_block.haveLeft())
                     {
-                    /*
-                    tex.add(0.0f); tex.add(0.0f);
-                    tex.add(1.0f); tex.add(0.0f);
-                    tex.add(0.0f); tex.add(1.0f);
-                    tex.add(1.0f); tex.add(1.0f);
-                    */
                     for(int i = 0; i < 8; i++) { tex.add(wallcrds[i]); }
 
-                    //ind.add(0+counter); ind.add(1+counter); ind.add(3+counter);
-                    //ind.add(3+counter); ind.add(2+counter); ind.add(0+counter);
                     ind.add(0+counter); ind.add(1+counter); ind.add(2+counter);
                     ind.add(1+counter); ind.add(3+counter); ind.add(2+counter);
                     counter+=4;
@@ -191,21 +182,16 @@ public class MazeObj extends Mesh
                     }
                 }
 
-
-
-        //String vbbs = "";
-
-
         float[] vbbArray = new float[vbb.size()];
         float[] texArray = new float[tex.size()];
         short[] indArray = new short[ind.size()];
         int i = 0;
-        for (Float f : vbb) { vbbArray[i++] = f; /*vbbs+=f.toString()+" ";*/ }
+        for (Float f : vbb) { vbbArray[i++] = f; }
         i = 0;
         for (Float f : tex) { texArray[i++] = f; }
         i = 0;
         for (Integer f : ind) { indArray[i++] = (short)(int)f; }
-        //Log.d("maze3d", "VBB: " + vbbs);
+
         setIndices(indArray);
         setVertices(vbbArray);
         setTextureCoordinates(texArray);

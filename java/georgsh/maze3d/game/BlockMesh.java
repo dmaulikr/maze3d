@@ -63,7 +63,7 @@ public class BlockMesh extends Mesh
                 -xs / 2,  ys / 2, zs / 2,
                 xs / 2, ys / 2, zs / 2,};
         float[] allvertices = new float[12 * texturemap.length/4];
-        //String vertics = "";
+
         for (int i = 0; i < texturemap.length/4; i++)
             {
             for (int p = 0; p < 4; p++)
@@ -72,22 +72,12 @@ public class BlockMesh extends Mesh
                 for (int c = 0; c < 3; c++)
                     {
                     allvertices[i * 12 + p * 3 + c] = vertices[cur_ver * 3 + c];
-                    //vertics += ((Float)vertices[cur_ver * 3 + c]).toString()+", ";
                     }
                 }
             }
-        /*
-        String allcoordss = "";
-        for (int i = 0; i < 6 * 8; i++)
-            {
-            allcoordss += ((Float) alltexcoords[i]).toString() + ", ";
-            }
-        */
-        //Log.d("maze3d", "tex coords = " + allcoordss);
-        //Log.d("maze3d", "vertices = "+vertics);
+
         setIndices(allindices);
         setVertices(allvertices);
-        //setColors(new float[]{});
         setTextureCoordinates(alltexcoords);
         loadBitmap(tex);
         }

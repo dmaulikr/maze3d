@@ -4,23 +4,15 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Rect;
 import android.opengl.GLES11Ext;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.opengl.GLSurfaceView.Renderer;
-
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
 import java.util.Vector;
-
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 import javax.microedition.khronos.opengles.GL11;

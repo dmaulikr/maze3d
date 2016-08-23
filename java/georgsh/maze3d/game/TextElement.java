@@ -20,7 +20,7 @@ public class TextElement
     {
     FloatBuffer mVerticesBuffer = null;
     ShortBuffer mIndicesBuffer = null;
-    FloatBuffer mTextureBuffer; // New variable.
+    FloatBuffer mTextureBuffer;
     int mNumOfIndices = -1;
     float alpha = 0;
     float animstep = (float)-Math.PI/2;
@@ -38,7 +38,6 @@ public class TextElement
     public void translate(GL10 gl)
         {
         gl.glTranslatef(curx, cury, 0);
-        //gl.glRotatef(90, 0, 0, 1);
         gl.glTranslatef(-width/2, -height/2, 0);
         }
     public boolean update()

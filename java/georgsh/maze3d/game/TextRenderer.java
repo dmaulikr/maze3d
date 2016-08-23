@@ -32,10 +32,10 @@ public class TextRenderer
 
     private FloatBuffer mVerticesBuffer = null;
     private ShortBuffer mIndicesBuffer = null;
-    private FloatBuffer mTextureBuffer; // New variable.
+    private FloatBuffer mTextureBuffer;
     private int mNumOfIndices = -1;
-    private int mTextureId = -1; // New variable.
-    private boolean mShouldLoadTexture = false; // New variable.
+    private int mTextureId = -1;
+    private boolean mShouldLoadTexture = false;
 
     static String alphabet =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ"+
@@ -45,7 +45,7 @@ public class TextRenderer
 
 
     AssetManager mgr;
-    private Bitmap mBitmap; // New variable.
+    private Bitmap mBitmap;
     float texsize;
     Map<Character,RectF> symmap = new HashMap<Character, RectF>();
     Vector<TextElement> alltexts = new Vector<TextElement>();
@@ -120,10 +120,10 @@ public class TextRenderer
         {
         texsize = size;
         this.mgr = mgr;
-        float textureCoordinates[] = { 0.0f, 0.0f, //
-                1.0f, 0.0f, //
-                0.0f, 1.0f, //
-                1.0f, 1.0f, //
+        float textureCoordinates[] = { 0.0f, 0.0f,
+                1.0f, 0.0f,
+                0.0f, 1.0f,
+                1.0f, 1.0f,
         };
         short[] indices = new short[] { 0, 3, 1, 3, 0, 2 };
 

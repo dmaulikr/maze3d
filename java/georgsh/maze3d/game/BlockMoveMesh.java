@@ -159,20 +159,15 @@ public class BlockMoveMesh extends Mesh
                     vbb.add( + wallsize/2 );
 
 
-
-        //String vbbs = "";
-
-
         float[] vbbArray = new float[vbb.size()];
         float[] texArray = new float[tex.size()];
         short[] indArray = new short[ind.size()];
         int i = 0;
-        for (Float f : vbb) { vbbArray[i++] = f; /*vbbs+=f.toString()+" ";*/ }
+        for (Float f : vbb) { vbbArray[i++] = f; }
         i = 0;
         for (Float f : tex) { texArray[i++] = f; }
         i = 0;
         for (Integer f : ind) { indArray[i++] = (short)(int)f; }
-        //Log.d("maze3d", "VBB: " + vbbs);
         setIndices(indArray);
         setVertices(vbbArray);
         setTextureCoordinates(texArray);

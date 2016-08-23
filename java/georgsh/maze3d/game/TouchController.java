@@ -43,29 +43,19 @@ public class TouchController
             {
             game.xsp = 0.04f * movx / ds;
             game.ysp = 0.04f * movy / ds;
-            //Log.d("maze3d", "speed: (" + xsp + ", " + ysp + ")");
             }
         }
 
     void RotatorMove(MotionEvent event, int pointerindex, int ptrid)
         {
-        //Log.d("maze3d", "ACTION_MOVE, ptr_index = "+pointerindex+", ptr_id = "+ptrid);
         float x = event.getX(pointerindex);
         float y = event.getY(pointerindex);;
-        //Log.d("maze3d", "rotator move");
-        //float dx = x - rotatorX;
-        //float dy = y - rotatorY;
+
         float dx = x - previousX;
         float dy = y - previousY;
-        float ds = (float) Math.sqrt(dx * dx + dy * dy);
-        //dx = dx / scrh;
-        //dy = dy / scrh;
-        //if (ds > 20)
-        //    {
+
         game.rotMov(dx * 0.3f, dy * 0.3f);
-        //rotxsp = dx/ds * 3.0f;
-        //rotysp = dy/ds * 3.0f;
-        //    }
+
         previousX = x;
         previousY = y;
         }
@@ -86,7 +76,6 @@ public class TouchController
                 {
                 pointerindex = i;
                 ptrid = event.getPointerId(pointerindex);
-                // Log.i("maze3d", "ptrid = " + ptrid+"; rot:"+rotatorid+", cont:"+controllerid);
                 if (ptrid == rotatorid)
                     {
                     RotatorMove(event, pointerindex, ptrid);
@@ -102,14 +91,6 @@ public class TouchController
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_POINTER_DOWN:
             {
-                /*
-                for(LeverLogic lever: levers)
-                    {
-
-                    lever.changeState();
-                    }
-                */
-            //Log.d("maze3d", "ACTION_DOWN, ptr_index = "+pointerindex+", ptr_id = "+ptrid+", x:"+x);
             x = event.getX(pointerindex);
             y = event.getY(pointerindex);
 
