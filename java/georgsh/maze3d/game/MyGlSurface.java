@@ -31,6 +31,7 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
     Vector<LeverWallsSystem> leversystems;
 
     MarkRender markrender;
+    CoinRender coinrender;
 
     TextRenderer textrender;
     BlocksMoveRender animblocksrender;
@@ -330,10 +331,13 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
                 R.drawable.stick);
         Bitmap mark = BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.graffity);
+        Bitmap coin = BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.coin);
         root = new Group();
 
         animblocksrender = new BlocksMoveRender(wallbitmap, this, blocksize);
         markrender = new MarkRender(this, mark);
+        coinrender = new CoinRender(this, coin);
         //test.loadBitmap(mark);
         leverpad = new LeverObj(pad, stick);
 
@@ -344,6 +348,9 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
         //markrender.addMark(0,3,2);
         markrender.addMark(3,1,3);
 
+        coinrender.addCoin(0,0);
+        coinrender.addCoin(1,0);
+        coinrender.addCoin(2,0);
         setRenderer(this);
         }
 
@@ -625,6 +632,7 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
         root.draw(gl);
         DrawLevers(gl);
         markrender.drawAllMarks(gl);
+        coinrender.DrawAll(gl);
         //test.draw(gl);
         if(!touch_buffer.isEmpty())
             {
