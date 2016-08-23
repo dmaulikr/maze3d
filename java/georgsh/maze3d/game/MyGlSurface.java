@@ -32,6 +32,7 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
 
     MarkRender markrender;
     CoinRender coinrender;
+    CrateRender craterender;
 
     TextRenderer textrender;
     BlocksMoveRender animblocksrender;
@@ -333,11 +334,15 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
                 R.drawable.graffity);
         Bitmap coin = BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.coin);
+        Bitmap crate = BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.crate);
         root = new Group();
 
         animblocksrender = new BlocksMoveRender(wallbitmap, this, blocksize);
         markrender = new MarkRender(this, mark);
         coinrender = new CoinRender(this, coin);
+        craterender = new CrateRender(this, crate);
+
         //test.loadBitmap(mark);
         leverpad = new LeverObj(pad, stick);
 
@@ -351,6 +356,9 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
         coinrender.addCoin(0,0);
         coinrender.addCoin(1,0);
         coinrender.addCoin(2,0);
+
+        craterender.addCrate(4, 0);
+        craterender.addCrate(4, 1);
         setRenderer(this);
         }
 
@@ -633,6 +641,7 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
         DrawLevers(gl);
         markrender.drawAllMarks(gl);
         coinrender.DrawAll(gl);
+        craterender.DrawAll(gl);
         //test.draw(gl);
         if(!touch_buffer.isEmpty())
             {
