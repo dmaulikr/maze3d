@@ -10,7 +10,7 @@ public class LeverLogic
     float posx = 0;
     float posy = 0;
     float zrot = 0;
-    float stickangle = -45f;
+    float stickangle = 45f;
     boolean changing = false;
     boolean state = true;
     LeverWallsSystem subsystem;
@@ -88,8 +88,8 @@ public class LeverLogic
         {
         if(changing)
             {
-            if (state) { stickangle-=2f; }
-            else { stickangle += 2f; }
+            if (state) { stickangle+=2f; }
+            else { stickangle -= 2f; }
             if (stickangle < -45f) { stickangle = -45f; changing = false; }
             if (stickangle > 45f) { stickangle = 45f; changing = false; }
             }
