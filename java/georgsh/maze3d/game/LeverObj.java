@@ -40,28 +40,6 @@ public class LeverObj
             }
         pad.endDraw(gl);
 
-        /*
-        Block[][] maze = surface.mazeobj;
-        pad.beginDraw(gl);
-        for(int y = 0; y < maze.length; y++)
-            {
-            for (int x = 0; x < maze[y].length; x++)
-                {
-                if(maze[y][x].haveRight() && maze[y][x].haveRightLever())
-                    {
-                    float curx = surface.BlockTorealX(x)+surface.blocksize/2;
-                    float cury = surface.BlockTorealY(y);
-                    gl.glPushMatrix();
-                    gl.glTranslatef(curx,cury,0);
-                    gl.glRotatef(90, 1, 0, 0);
-                    gl.glRotatef(90, 0, 1, 0);
-                    pad.drawBody(gl);
-                    gl.glPopMatrix();
-                    }
-                }
-            }
-        pad.endDraw(gl);
-        */
         }
     public void drawAllSticks(GL10 gl, Vector<LeverLogic> levers)
         {
@@ -83,28 +61,6 @@ public class LeverObj
             gl.glPopMatrix();
             }
         stick.endDraw(gl);
-        /*
-        Block[][] maze = surface.mazeobj;
-        stick.beginDraw(gl);
-        for(int y = 0; y < maze.length; y++)
-            {
-            for (int x = 0; x < maze[y].length; x++)
-                {
-                if(maze[y][x].haveRight() && maze[y][x].haveRightLever())
-                    {
-                    float curx = surface.BlockTorealX(x)+surface.blocksize/2;
-                    float cury = surface.BlockTorealY(y);
-                    gl.glPushMatrix();
-                    gl.glTranslatef(curx+stick.zs/2,cury,0);
-                    gl.glRotatef(90, 1, 0, 0);
-                    gl.glRotatef(90, 0, 1, 0);
-                    stick.drawBody(gl);
-                    gl.glPopMatrix();
-                    }
-                }
-            }
-        stick.endDraw(gl);
-        */
         }
     public void loadGLTexture(GL10 gl)
         {
