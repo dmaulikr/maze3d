@@ -78,6 +78,8 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
     float scrw = 0;
     float scrh = 0;
     int curr_level = 0;
+    int curr_folder = 0;
+    String[] level_folders={"LearnLevels", "TestLevels", "GameLevels"};
     char[][] maze2d;
     float blocksize = 1f;
 
@@ -343,37 +345,25 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
         coinrender = new CoinRender(this, coin);
         craterender = new CrateRender(this, crate);
 
-        //test.loadBitmap(mark);
         leverpad = new LeverObj(pad, stick);
 
-        markrender.addMark(0,1,1);
-
-        markrender.addMark(3,1,0);
-        markrender.addMark(3,1,1);
-        //markrender.addMark(0,3,2);
-        markrender.addMark(3,1,3);
-
-        coinrender.addCoin(0,0);
-        coinrender.addCoin(1,0);
-        coinrender.addCoin(2,0);
-
-        craterender.addCrate(4, 0);
-        craterender.addCrate(4, 1);
         setRenderer(this);
         }
 
     public void LoadNextLevel()
         {
-        curr_level = curr_level%4;
         try
             {
-            LoadLevel("Map"+(curr_level+1)+".txt");
+            LoadLevel(level_folders[curr_folder]+"/Map"+(curr_level+1)+".txt");
             }
         catch (IOException e)
             {
-            curr_level++;
-            LoadNextLevel();
             Log.w("maze3d", "cannot open Map"+(curr_level+1)+".txt: "+e.getMessage());
+            curr_level=0;
+            curr_folder++;
+            if(curr_folder >= level_folders.length) { curr_folder = 0; }
+            LoadNextLevel();
+            return;
             }
         curr_level++;
         }

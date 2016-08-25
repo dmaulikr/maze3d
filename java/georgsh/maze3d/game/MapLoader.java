@@ -52,7 +52,8 @@ public class MapLoader
             Log.d("maze3d", "read line "+newline);
             maze2d[y] = newline.toCharArray();
             }
-        fileread.nextLine(); // empty line
+        if(fileread.hasNext())
+            fileread.nextLine(); // empty line
         return maze2d;
         }
     LeverWallsSystem LoadOneLever()
