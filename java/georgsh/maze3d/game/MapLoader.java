@@ -25,10 +25,22 @@ public class MapLoader
         this.game = game;
         fileread = new Scanner(new InputStreamReader(file));
         }
+    void readHeader()
+        {
+        header = "";
+        while(true)
+            {
+            String newline = fileread.nextLine();
+            if (newline.equals("*")) { break; }
+
+            header += newline + "\n";
+            }
+        Log.d("maze3d", "header = "+header);
+        fileread.nextLine(); // empty line
+        }
     char[][] LoadWalls()
         {
-        header = fileread.nextLine();
-        fileread.nextLine(); // empty line
+        readHeader();
         int width = fileread.nextInt();
         int height = fileread.nextInt();
         fileread.nextLine(); // end on line

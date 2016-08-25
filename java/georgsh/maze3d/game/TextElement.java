@@ -55,28 +55,44 @@ public class TextElement
 
     TextElement(TextRenderer textrender, String text, Rect boundbox)
         {
-
-        float sumsize = 0;
-        for (int i = 0; i < text.length(); i++)
+        float textwidth = 0;
+        String[] textlines = text.split("\n");
+        for(String curr_line : textlines)
             {
-            sumsize += textrender.symmap.get(text.charAt(i)).width();
+            float sumsize = 0;
+            for (int i = 0; i < curr_line.length(); i++)
+                {
+                sumsize += textrender.symmap.get(curr_line.charAt(i)).width();
+                }
+            textwidth = Math.max(textwidth, sumsize);
             }
-        float sizemultiplier = boundbox.width() / sumsize / textrender.texsize;
-        addTextElement(textrender, text, sizemultiplier);
+
+        float sizemultiplier = boundbox.width() / textwidth / textrender.texsize;
+        addTextElement(textrender, textlines, sizemultiplier);
         }
 
-    void addTextElement(TextRenderer textrender, String text, float size)
+    void addTextElement(TextRenderer textrender, String[] textlines, float size)
         {
         size *= textrender.texsize;
         short[] indicesbase = new short[]{0, 3, 1, 3, 0, 2};
-
-        float textureCoordinates[] = new float[text.length() * 8];
-        short indices[] = new short[text.length() * indicesbase.length];
-        float vertices[] = new float[text.length() * 12];
-
-        addTextLine(textrender, text, size, 0, textureCoordinates, indices, vertices, 0);
-
-        height = textrender.symmap.get('A').height() * size;
+        int textlength = 0;
+        for (String line : textlines)
+            {
+            textlength += line.length();
+            }
+        float textureCoordinates[] = new float[textlength * 8];
+        short indices[] = new short[textlength * indicesbase.length];
+        float vertices[] = new float[textlength * 12];
+        int cur_index = 0;
+        float cur_vshift = 0;
+        float letterheight = textrender.symmap.get('A').height() * size;
+        for (String line : textlines)
+            {
+            addTextLine(textrender, line, size, cur_vshift, textureCoordinates, indices, vertices, cur_index);
+            cur_index += line.length();
+            cur_vshift += letterheight;
+            }
+        height = cur_vshift;
         setIndices(indices);
         setVertices(vertices);
         setTextureCoordinates(textureCoordinates);
@@ -95,7 +111,7 @@ public class TextElement
         float cur_x = 0;
         for (int i = last_element; i < last_element+text.length(); i++)
             {
-            RectF sym_rect = textrender.symmap.get(text.charAt(i));
+            RectF sym_rect = textrender.symmap.get(text.charAt(i-last_element));
             textureCoordinates[i * 8 + 0] = sym_rect.left;
             textureCoordinates[i * 8 + 1] = sym_rect.top;
 
