@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.opengl.GLES11Ext;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
@@ -28,6 +29,7 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
 
     //SimplePlane test = new SimplePlane(1);
     Vector<LeverLogic> levers;
+    UIButton startgame;
     Vector<LeverWallsSystem> leversystems;
 
     MarkRender markrender;
@@ -36,6 +38,10 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
 
     TextRenderer textrender;
     BlocksMoveRender animblocksrender;
+
+    boolean inmenu = true;
+    void SwitchToGame() { inmenu = false; }
+    void SwitchToMenu() { inmenu = true; }
 
     class TouchEvent
         {
@@ -346,7 +352,6 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
         craterender = new CrateRender(this, crate);
 
         leverpad = new LeverObj(pad, stick);
-
         setRenderer(this);
         }
 
@@ -417,7 +422,7 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
         {
         Log.d("maze3d", "Init Textures");
         leverpad.loadGLTexture(gl);
-        maze.loadGLTexture(gl);
+        //maze.loadGLTexture(gl);
         animblocksrender.loadGLTexture(gl);
         //fontrender.loadGLTexture(gl);
         }
@@ -473,6 +478,17 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
         return screen_coords;
         }
 
+    class UIStart implements UIListener
+        {
+        @Override
+        public void activate()
+            {
+            SwitchToGame();
+            LoadNextLevel();
+            startgame.disable(textrender);
+            }
+        }
+
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height)
         {
@@ -484,8 +500,13 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
             {
             surface_ready = true;
             textrender = new TextRenderer(256, mgr);
-            LoadNextLevel();
             InitTextures(gl);
+            int buttonw = width/2;
+            int buttonh = height/10;
+            Rect coords = new Rect(width/2-buttonw/2,height/2-buttonh/2,
+                                   width/2+buttonw/2,height/2+buttonh/2);
+            startgame = new UIButton("START", coords, new UIStart());
+            startgame.enable(textrender);
             }
 
             gl.glViewport(0, 0, width, height);
@@ -611,12 +632,8 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
             }
         return false;
         }
-
-    @Override
-    synchronized public void onDrawFrame(GL10 gl)
+    void draw3d(GL10 gl)
         {
-        UpdateScene(gl);
-        if(CheckIfFinish()) { LoadNextLevel(); return; }
 
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
         gl.glLoadIdentity();
@@ -637,8 +654,9 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
             {
             PerformTouchEvents(gl);
             }
-
-        // Draw 2d stuff
+        }
+    void draw2d(GL10 gl)
+        {
         gl.glMatrixMode(GL10.GL_PROJECTION);
         gl.glPushMatrix();
         gl.glLoadIdentity();
@@ -654,6 +672,46 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
         gl.glMatrixMode(GL10.GL_PROJECTION);
         gl.glPopMatrix();
         gl.glMatrixMode(GL10.GL_MODELVIEW);
+        }
+    void drawmenu(GL10 gl)
+        {
+        gl.glMatrixMode(GL10.GL_PROJECTION);
+        gl.glPushMatrix();
+        gl.glLoadIdentity();
+        gl.glOrthof(0f,scrw,scrh,0f,-1f,10.0f);
+        gl.glMatrixMode(GL10.GL_MODELVIEW);
+        gl.glLoadIdentity();
+        gl.glDisable(GL10.GL_CULL_FACE);
+        gl.glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
+        gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+
+        textrender.draw(gl);
+
+        gl.glMatrixMode(GL10.GL_PROJECTION);
+        gl.glPopMatrix();
+        gl.glMatrixMode(GL10.GL_MODELVIEW);
+        }
+    @Override
+    synchronized public void onDrawFrame(GL10 gl)
+        {
+        if(!inmenu)
+            {
+            UpdateScene(gl);
+            if(CheckIfFinish()) { LoadNextLevel(); return; }
+            draw3d(gl);
+            draw2d(gl);
+            }
+        else
+            {
+            Iterator<TouchEvent> touches = touch_buffer.iterator();
+            while(touches.hasNext())
+                {
+                TouchEvent touch = touches.next();
+                startgame.Click(touch.x, touch.y);
+                touches.remove();
+                }
+            drawmenu(gl);
+            }
         }
 
     @Override

@@ -53,7 +53,8 @@ public class TextRenderer
 
     public TextElement addText(String text, Rect size)
         {
-        TextElement newobj = new TextElement(this, text, size);
+        TextElement newobj = new StaticText(this, text, size);
+        newobj.setPos(size.centerX(), size.centerY());
         alltexts.add(newobj);
         return newobj;
         }
