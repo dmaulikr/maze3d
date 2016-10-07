@@ -43,15 +43,6 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
     void SwitchToGame() { inmenu = false; }
     void SwitchToMenu() { inmenu = true; }
 
-    class TouchEvent
-        {
-        float x, y;
-        TouchEvent(float x, float y)
-            {
-            this.x = x;
-            this.y = y;
-            }
-        }
     Vector<TouchEvent> touch_buffer = new Vector<TouchEvent>();
     TouchController controller;
     Context appcont;
@@ -657,23 +648,14 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
         }
     void draw2d(GL10 gl)
         {
-        gl.glMatrixMode(GL10.GL_PROJECTION);
-        gl.glPushMatrix();
-        gl.glLoadIdentity();
-        gl.glOrthof(0f,scrw,scrh,0f,-1f,10.0f);
-        gl.glMatrixMode(GL10.GL_MODELVIEW);
-        gl.glLoadIdentity();
-        gl.glDisable(GL10.GL_CULL_FACE);
+        init2dsufrace(gl);
 
         gl.glClear(GL10.GL_DEPTH_BUFFER_BIT);
-
         textrender.draw(gl);
 
-        gl.glMatrixMode(GL10.GL_PROJECTION);
-        gl.glPopMatrix();
-        gl.glMatrixMode(GL10.GL_MODELVIEW);
+        end2dsurface(gl);
         }
-    void drawmenu(GL10 gl)
+    void init2dsufrace(GL10 gl)
         {
         gl.glMatrixMode(GL10.GL_PROJECTION);
         gl.glPushMatrix();
@@ -682,14 +664,23 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
         gl.glMatrixMode(GL10.GL_MODELVIEW);
         gl.glLoadIdentity();
         gl.glDisable(GL10.GL_CULL_FACE);
-        gl.glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
-        gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 
-        textrender.draw(gl);
-
+        }
+    void end2dsurface(GL10 gl)
+        {
         gl.glMatrixMode(GL10.GL_PROJECTION);
         gl.glPopMatrix();
         gl.glMatrixMode(GL10.GL_MODELVIEW);
+        }
+    void drawmenu(GL10 gl)
+        {
+        init2dsufrace(gl);
+
+        gl.glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
+        gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+        textrender.draw(gl);
+        
+        end2dsurface(gl);
         }
     @Override
     synchronized public void onDrawFrame(GL10 gl)
