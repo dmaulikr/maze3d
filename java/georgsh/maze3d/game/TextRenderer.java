@@ -48,31 +48,6 @@ public class TextRenderer
     private Bitmap mBitmap;
     float texsize;
     Map<Character,RectF> symmap = new HashMap<Character, RectF>();
-    Vector<TextElement> alltexts = new Vector<TextElement>();
-
-
-    public TextElement addText(String text, Rect size)
-        {
-        TextElement newobj = new StaticText(this, text, size);
-        newobj.setPos(size.centerX(), size.centerY());
-        alltexts.add(newobj);
-        return newobj;
-        }
-    public void AddTextNotify(String text, float scrw, float scrh)
-        {
-        Log.d("maze3d", "Add text notify");
-        TextElement newobj = new TextElement(this, text, new Rect(0,0,(int)(scrw*0.8),(int)(scrh*0.25))); // TODO
-        newobj.setPos(scrw/2, scrh/2);
-        alltexts.add(newobj);
-        }
-    public void removeText(TextElement text)
-        {
-        alltexts.remove(text);
-        }
-    public void removeAll()
-        {
-        alltexts.removeAllElements();
-        }
 
     public void InitFontMap()
         {
@@ -138,7 +113,7 @@ public class TextRenderer
         setTextureCoordinates(textureCoordinates);
         InitFontMap();
         }
-    public void draw(GL10 gl)
+    public void draw(GL10 gl, Vector<TextElement> alltexts)
         {
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
         gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);

@@ -37,6 +37,8 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
     CrateRender craterender;
 
     TextRenderer textrender;
+    TextBuffer gametext;
+    TextBuffer menutext;
     BlocksMoveRender animblocksrender;
 
     boolean inmenu = true;
@@ -369,7 +371,7 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
         loader = new MapLoader(this, mgr.open(mapfile));
 
         maze2d = loader.LoadWalls();
-        textrender.AddTextNotify(loader.getHeader(), scrw, scrh);
+        gametext.AddTextNotify(loader.getHeader(), scrw, scrh);
         Log.d("maze3d", "Start init blocks");
         initMazeBlocks();
         ReloadMazeBlocks();
@@ -476,7 +478,6 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
             {
             SwitchToGame();
             LoadNextLevel();
-            startgame.disable(textrender);
             }
         }
 
@@ -491,13 +492,14 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
             {
             surface_ready = true;
             textrender = new TextRenderer(256, mgr);
+            gametext = new TextBuffer(textrender);
+            menutext = new TextBuffer(textrender);
             InitTextures(gl);
             int buttonw = width/2;
             int buttonh = height/10;
             Rect coords = new Rect(width/2-buttonw/2,height/2-buttonh/2,
                                    width/2+buttonw/2,height/2+buttonh/2);
-            startgame = new UIButton("START", coords, new UIStart());
-            startgame.enable(textrender);
+            startgame = new UIButton("START", menutext, coords, new UIStart());
             }
 
             gl.glViewport(0, 0, width, height);
@@ -651,7 +653,7 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
         init2dsufrace(gl);
 
         gl.glClear(GL10.GL_DEPTH_BUFFER_BIT);
-        textrender.draw(gl);
+        gametext.draw(gl);
 
         end2dsurface(gl);
         }
@@ -678,8 +680,8 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
 
         gl.glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
-        textrender.draw(gl);
-        
+        menutext.draw(gl);
+
         end2dsurface(gl);
         }
     @Override

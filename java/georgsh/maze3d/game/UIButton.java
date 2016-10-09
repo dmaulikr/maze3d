@@ -17,19 +17,12 @@ public class UIButton
     TextElement drawabletext;
     UIListener callback;
 
-    UIButton(String text, Rect coords, UIListener callback)
+    UIButton(String text, TextBuffer buffer, Rect coords, UIListener callback)
         {
+        buffer.addText(text, coords);
         this.coords = new Rect(coords);
         this.text = text;
         this.callback = callback;
-        }
-    void enable(TextRenderer renderer)
-        {
-        drawabletext = renderer.addText(text, coords);
-        }
-    void disable(TextRenderer renderer)
-        {
-        renderer.removeText(drawabletext);
         }
     boolean Click(float x, float y)
         {
