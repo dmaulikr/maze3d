@@ -2,6 +2,8 @@ package georgsh.maze3d.game;
 
 import android.graphics.Bitmap;
 
+import javax.microedition.khronos.opengles.GL10;
+
 public class BlockMesh extends Mesh
     {
     float xs, ys, zs;
