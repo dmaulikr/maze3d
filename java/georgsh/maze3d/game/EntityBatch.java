@@ -22,6 +22,10 @@ public class EntityBatch
         this.drawmesh = drawmesh;
         drawmesh.loadBitmap(texture);
         }
+    EntityBatch()
+        {
+        // default constructor
+        }
     void DrawAll(GL10 gl)
         {
         updateAll();
@@ -29,7 +33,7 @@ public class EntityBatch
         for(GameEntity entity : entities)
             {
             gl.glPushMatrix();
-            entity.translate(gl);
+            entity.translate(gl, game);
             drawmesh.drawBody(gl);
             gl.glPopMatrix();
             }
@@ -41,5 +45,9 @@ public class EntityBatch
             {
             entity.update();
             }
+        }
+    void addEntity(GameEntity entity)
+        {
+        entities.add(entity);
         }
     }

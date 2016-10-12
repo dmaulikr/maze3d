@@ -7,6 +7,6 @@ import javax.microedition.khronos.opengles.GL10;
  */
 interface GameEntity
     {
-    void translate(GL10 gl);
+    void translate(GL10 gl, MyGlSurface game);
     void update();
     }
