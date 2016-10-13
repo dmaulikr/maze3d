@@ -1,9 +1,11 @@
 package georgsh.maze3d.game;
 
+import javax.microedition.khronos.opengles.GL10;
+
 /**
  * Created by yura on 23.08.16.
  */
-public class Crate
+public class Crate implements GameEntity
     {
     int x;
     int y;
@@ -20,10 +22,17 @@ public class Crate
         posy = game.BlockTorealY(y);
         }
 
-    boolean update()
+    @Override
+    public void translate(GL10 gl, MyGlSurface game)
+        {
+        gl.glTranslatef(posx, posy, game.blocksize/2-CrateRender.cratesize);
+        gl.glRotatef(curangle, 0, 0, 1);
+        }
+
+    @Override
+    public void update()
         {
         curangle+=2;
         if(curangle >= 360) { curangle-=360; }
-        return true;
         }
     }
