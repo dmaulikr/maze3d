@@ -344,10 +344,10 @@ public class MyGlSurface extends GLSurfaceView implements Renderer
         coinrender = new CoinRender(this, coin);
         craterender = new CrateRender(this, crate);
 
-        coinrender.addCoin(0,0);
-        coinrender.addCoin(0,1);
-        coinrender.addCoin(1,0);
-        coinrender.addCoin(1,1);
+        craterender.addCrate(0,0);
+        craterender.addCrate(0,1);
+        craterender.addCrate(1,0);
+        craterender.addCrate(1,1);
 
         leverpad = new LeverObj(pad, stick);
         setRenderer(this);
